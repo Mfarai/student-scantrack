@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -62,6 +61,8 @@ const studentSchema = z.object({
   class: z.string().min(1, "Class is required"),
 });
 
+type StudentFormValues = z.infer<typeof studentSchema>;
+
 const Students = () => {
   const navigate = useNavigate();
   const [students, setStudents] = useState<Student[]>(sampleStudents);
@@ -71,7 +72,7 @@ const Students = () => {
   const [studentToEdit, setStudentToEdit] = useState<Student | null>(null);
   const [studentToDelete, setStudentToDelete] = useState<string | null>(null);
   
-  const form = useForm<z.infer<typeof studentSchema>>({
+  const form = useForm<StudentFormValues>({
     resolver: zodResolver(studentSchema),
     defaultValues: {
       name: "",
@@ -126,7 +127,7 @@ const Students = () => {
     }
   };
 
-  const onSubmit = (data: z.infer<typeof studentSchema>) => {
+  const onSubmit = (data: StudentFormValues) => {
     if (studentToEdit) {
       // Update existing student
       const updated = updateStudent({
@@ -138,9 +139,16 @@ const Students = () => {
       );
       toast.success("Student updated successfully");
     } else {
-      // Add new student
-      const newStudent = addStudent(data);
-      setStudents([...students, newStudent as Student]);
+      // Add new student - ensure all required fields are present
+      const newStudentData: Omit<Student, "id" | "qrCode"> = {
+        name: data.name,
+        studentId: data.studentId,
+        email: data.email,
+        class: data.class,
+      };
+      
+      const newStudent = addStudent(newStudentData);
+      setStudents([...students, newStudent]);
       toast.success("Student added successfully");
     }
     setOpenDialog(false);

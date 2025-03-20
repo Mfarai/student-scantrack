@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -54,6 +53,8 @@ const classSchema = z.object({
   totalStudents: z.coerce.number().min(0, "Total students must be a positive number"),
 });
 
+type ClassFormValues = z.infer<typeof classSchema>;
+
 const Classes = () => {
   const navigate = useNavigate();
   const [classes, setClasses] = useState<Class[]>(sampleClasses);
@@ -63,7 +64,7 @@ const Classes = () => {
   const [classToEdit, setClassToEdit] = useState<Class | null>(null);
   const [classToDelete, setClassToDelete] = useState<string | null>(null);
   
-  const form = useForm<z.infer<typeof classSchema>>({
+  const form = useForm<ClassFormValues>({
     resolver: zodResolver(classSchema),
     defaultValues: {
       name: "",
@@ -121,7 +122,7 @@ const Classes = () => {
     navigate(`/scanner?classId=${id}`);
   };
 
-  const onSubmit = (data: z.infer<typeof classSchema>) => {
+  const onSubmit = (data: ClassFormValues) => {
     if (classToEdit) {
       // Update existing class
       const updated = updateClass({
@@ -134,8 +135,15 @@ const Classes = () => {
       toast.success("Class updated successfully");
     } else {
       // Add new class
-      const newClass = addClass(data);
-      setClasses([...classes, newClass as Class]);
+      const newClassData: Omit<Class, "id"> = {
+        name: data.name,
+        description: data.description,
+        schedule: data.schedule,
+        totalStudents: data.totalStudents,
+      };
+      
+      const newClass = addClass(newClassData);
+      setClasses([...classes, newClass]);
       toast.success("Class added successfully");
     }
     setOpenDialog(false);
