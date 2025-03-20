@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Mail, MoreVertical, Edit, Trash2, QrCode } from "lucide-react";
+import { Mail, MoreVertical, Edit, Trash2, QrCode, Award } from "lucide-react";
 import QRCodeGenerator from "./QRCodeGenerator";
 import StudentDetails from "./StudentDetails";
 import { cn } from "@/lib/utils";
@@ -80,6 +80,10 @@ const StudentCard = ({
                     <QrCode className="mr-2 h-4 w-4" />
                     Show QR Code
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => setShowDetails(true)}>
+                    <Award className="mr-2 h-4 w-4" />
+                    View Performance
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="text-destructive"
@@ -127,15 +131,24 @@ const StudentCard = ({
               </div>
             </div>
           </CardContent>
-          <CardFooter className="pt-1">
+          <CardFooter className="pt-1 flex justify-between">
             <Button
               variant="outline"
               size="sm"
-              className="w-full"
+              className="flex-1 mr-1"
               onClick={() => setShowQrCode(true)}
             >
               <QrCode className="h-3.5 w-3.5 mr-2" />
-              View QR Code
+              QR Code
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex-1 ml-1"
+              onClick={() => setShowDetails(true)}
+            >
+              <Award className="h-3.5 w-3.5 mr-2" />
+              Performance
             </Button>
           </CardFooter>
         </Card>
@@ -163,7 +176,7 @@ const StudentCard = ({
       <Dialog open={showDetails} onOpenChange={setShowDetails}>
         <DialogContent className="sm:max-w-[800px]">
           <DialogHeader>
-            <DialogTitle>Student Information</DialogTitle>
+            <DialogTitle>Student Information & Performance</DialogTitle>
             <DialogDescription>
               Detailed information and performance for {student.name}
             </DialogDescription>

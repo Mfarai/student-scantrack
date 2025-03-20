@@ -6,7 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { CameraOff, RefreshCw, Check, X } from "lucide-react";
+import { CameraOff, RefreshCw, Check, X, DoorOpen } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ScannerProps {
@@ -57,7 +57,7 @@ const Scanner = ({ onScan, className }: ScannerProps) => {
       onScan(result);
       
       // Show success toast
-      toast.success("QR Code scanned successfully");
+      toast.success("Entrance attendance recorded");
       
       // Stop scanning temporarily to prevent multiple scans
       setTimeout(() => {
@@ -110,7 +110,7 @@ const Scanner = ({ onScan, className }: ScannerProps) => {
         className="w-full"
       >
         <TabsList className="grid grid-cols-2 w-full mb-4">
-          <TabsTrigger value="camera">Camera</TabsTrigger>
+          <TabsTrigger value="camera">Entrance Scanner</TabsTrigger>
           <TabsTrigger value="history">Scan History</TabsTrigger>
         </TabsList>
         
@@ -145,8 +145,9 @@ const Scanner = ({ onScan, className }: ScannerProps) => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
                     <div className="absolute bottom-4 left-0 right-0 flex justify-center">
-                      <div className="px-4 py-2 bg-background/80 backdrop-blur-sm rounded-full text-sm font-medium">
-                        Position the QR code in the frame
+                      <div className="flex items-center px-4 py-2 bg-background/80 backdrop-blur-sm rounded-full text-sm font-medium">
+                        <DoorOpen className="h-4 w-4 mr-2 text-primary" />
+                        Scan student QR code to record entrance
                       </div>
                     </div>
                     
@@ -188,7 +189,7 @@ const Scanner = ({ onScan, className }: ScannerProps) => {
                       </div>
                       
                       <h3 className="text-xl font-medium mb-2">
-                        {lastResult.success ? "Scan Completed" : "Scan Failed"}
+                        {lastResult.success ? "Entrance Recorded" : "Scan Failed"}
                       </h3>
                       
                       <p className="text-muted-foreground text-center mb-6 break-all">
@@ -197,7 +198,7 @@ const Scanner = ({ onScan, className }: ScannerProps) => {
                       
                       <div className="flex space-x-2">
                         <Button onClick={resetScanner}>
-                          Scan Again
+                          Scan Next Student
                         </Button>
                       </div>
                     </motion.div>
@@ -214,7 +215,7 @@ const Scanner = ({ onScan, className }: ScannerProps) => {
               {lastResult ? (
                 <div className="w-full">
                   <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-medium">Recent Scans</h3>
+                    <h3 className="text-lg font-medium">Recent Entrances</h3>
                     <Button variant="outline" size="sm" onClick={resetScanner}>
                       Clear
                     </Button>
@@ -235,7 +236,7 @@ const Scanner = ({ onScan, className }: ScannerProps) => {
                         </div>
                         <div>
                           <p className="font-medium">
-                            {lastResult.success ? "Successful Scan" : "Failed Scan"}
+                            {lastResult.success ? "Entrance Recorded" : "Failed Scan"}
                           </p>
                           <p className="text-xs text-muted-foreground">
                             {new Date(lastResult.timestamp).toLocaleTimeString()}
@@ -250,7 +251,7 @@ const Scanner = ({ onScan, className }: ScannerProps) => {
                 </div>
               ) : (
                 <div className="text-center">
-                  <p className="text-muted-foreground mb-4">No recent scans</p>
+                  <p className="text-muted-foreground mb-4">No recent entrances recorded</p>
                   <Button onClick={() => setSelectedTab("camera")}>
                     Start Scanning
                   </Button>
