@@ -1,4 +1,12 @@
 
+/**
+ * Main Application Styles
+ * 
+ * This file contains global CSS animations and custom styling
+ * that extends the Tailwind CSS framework. It defines animations,
+ * transitions, and special effects used throughout the application.
+ */
+
 /* Modern gradient animations */
 @keyframes gradient-shift {
   0% {

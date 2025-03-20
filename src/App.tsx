@@ -1,4 +1,15 @@
 
+/**
+ * Main Application Component
+ * 
+ * This is the root component of the application that sets up:
+ * - React Query for data fetching and state management
+ * - React Router for navigation
+ * - Framer Motion for animations
+ * - Toast notifications
+ * - Tooltip functionality
+ */
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,9 +25,15 @@ import AttendanceHistory from "./pages/AttendanceHistory";
 import NotFound from "./pages/NotFound";
 import Teachers from "./pages/Teachers";
 
+// Initialize React Query client
 const queryClient = new QueryClient();
 
-// AnimatePresence wrapper component for route transitions
+/**
+ * AnimatedRoutes Component
+ * 
+ * Wraps all routes with AnimatePresence to enable smooth transitions
+ * between pages using Framer Motion animations.
+ */
 const AnimatedRoutes = () => {
   const location = useLocation();
   
@@ -36,6 +53,11 @@ const AnimatedRoutes = () => {
   );
 };
 
+/**
+ * App Component
+ * 
+ * The main application component that sets up the providers and routing.
+ */
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>

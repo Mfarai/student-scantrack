@@ -1,4 +1,11 @@
 
+/**
+ * ClassCard Component
+ * 
+ * Displays information about a class in a card format with actions
+ * for editing, deleting, and taking attendance.
+ */
+
 import { motion } from "framer-motion";
 import { Class } from "@/lib/data";
 import {
@@ -28,13 +35,27 @@ import {
 } from "lucide-react";
 
 interface ClassCardProps {
+  /** Class data to display */
   classItem: Class;
+  /** Function to call when edit action is triggered */
   onEdit: (classItem: Class) => void;
+  /** Function to call when delete action is triggered */
   onDelete: (id: string) => void;
+  /** Function to call when take attendance action is triggered */
   onScanAttendance: (id: string) => void;
+  /** Optional additional CSS classes */
   className?: string;
 }
 
+/**
+ * Card component to display class information
+ * 
+ * @param classItem - Class data to display
+ * @param onEdit - Edit handler function
+ * @param onDelete - Delete handler function
+ * @param onScanAttendance - Attendance scanner handler function
+ * @param className - Optional additional CSS classes
+ */
 const ClassCard = ({
   classItem,
   onEdit,

@@ -1,4 +1,15 @@
+/**
+ * Data Models and Mock Database for School Attendance System
+ * 
+ * This file contains all the data structures and mock database functionality
+ * for the application. In a production environment, this would be replaced
+ * with actual database connections and API calls.
+ */
 
+/**
+ * Student data model
+ * Represents a student in the school system
+ */
 export interface Student {
   id: string;
   name: string;
@@ -9,6 +20,10 @@ export interface Student {
   avatar?: string;
 }
 
+/**
+ * Class data model
+ * Represents a class or course in the school
+ */
 export interface Class {
   id: string;
   name: string;
@@ -17,6 +32,10 @@ export interface Class {
   totalStudents: number;
 }
 
+/**
+ * Attendance record data model
+ * Represents a single attendance event for a student
+ */
 export interface AttendanceRecord {
   id: string;
   studentId: string;
@@ -28,6 +47,10 @@ export interface AttendanceRecord {
   timeIn?: Date;
 }
 
+/**
+ * Attendance summary data model
+ * Provides aggregated attendance statistics
+ */
 export interface AttendanceSummary {
   total: number;
   present: number;
@@ -160,7 +183,9 @@ export const sampleAttendanceRecords: AttendanceRecord[] = [
   },
 ];
 
-// Today's attendance (for demo)
+/**
+ * Today's attendance summary (demo data)
+ */
 export const todayAttendance: AttendanceSummary = {
   total: 45,
   present: 38,
@@ -168,7 +193,9 @@ export const todayAttendance: AttendanceSummary = {
   percentage: Math.round((38 / 45) * 100),
 };
 
-// Weekly attendance (for demo)
+/**
+ * Weekly attendance summary (demo data)
+ */
 export const weeklyAttendance: AttendanceSummary = {
   total: 225,
   present: 195,
@@ -176,7 +203,9 @@ export const weeklyAttendance: AttendanceSummary = {
   percentage: Math.round((195 / 225) * 100),
 };
 
-// Monthly attendance (for demo)
+/**
+ * Monthly attendance summary (demo data)
+ */
 export const monthlyAttendance: AttendanceSummary = {
   total: 900,
   present: 810,
@@ -184,15 +213,39 @@ export const monthlyAttendance: AttendanceSummary = {
   percentage: Math.round((810 / 900) * 100),
 };
 
-// Simple store implementation (to be replaced with proper state management in a real app)
+/**
+ * Mock Database Implementation
+ * 
+ * The following variables and functions simulate a database with CRUD operations.
+ * In a real application, these would be replaced with actual database calls.
+ */
 let students = [...sampleStudents];
 let classes = [...sampleClasses];
 let attendanceRecords = [...sampleAttendanceRecords];
 
+/**
+ * Get all students from the database
+ * @returns Array of all students
+ */
 export const getStudents = () => students;
+
+/**
+ * Get all classes from the database
+ * @returns Array of all classes
+ */
 export const getClasses = () => classes;
+
+/**
+ * Get all attendance records from the database
+ * @returns Array of all attendance records
+ */
 export const getAttendanceRecords = () => attendanceRecords;
 
+/**
+ * Add a new student to the database
+ * @param student Student data without id and qrCode
+ * @returns The newly created student with generated id and qrCode
+ */
 export const addStudent = (student: Omit<Student, "id" | "qrCode">) => {
   const id = Math.max(...students.map(s => parseInt(s.id))) + 1 + '';
   const qrCode = student.studentId + "-QR";
@@ -201,16 +254,31 @@ export const addStudent = (student: Omit<Student, "id" | "qrCode">) => {
   return newStudent;
 };
 
+/**
+ * Update an existing student in the database
+ * @param student Updated student data
+ * @returns The updated student
+ */
 export const updateStudent = (student: Student) => {
   students = students.map(s => s.id === student.id ? student : s);
   return student;
 };
 
+/**
+ * Delete a student from the database
+ * @param id Student ID to delete
+ * @returns The ID of the deleted student
+ */
 export const deleteStudent = (id: string) => {
   students = students.filter(s => s.id !== id);
   return id;
 };
 
+/**
+ * Add a new class to the database
+ * @param classItem Class data without id
+ * @returns The newly created class with generated id
+ */
 export const addClass = (classItem: Omit<Class, "id">) => {
   const id = Math.max(...classes.map(c => parseInt(c.id))) + 1 + '';
   const newClass = { ...classItem, id };
@@ -218,16 +286,33 @@ export const addClass = (classItem: Omit<Class, "id">) => {
   return newClass;
 };
 
+/**
+ * Update an existing class in the database
+ * @param classItem Updated class data
+ * @returns The updated class
+ */
 export const updateClass = (classItem: Class) => {
   classes = classes.map(c => c.id === classItem.id ? classItem : c);
   return classItem;
 };
 
+/**
+ * Delete a class from the database
+ * @param id Class ID to delete
+ * @returns The ID of the deleted class
+ */
 export const deleteClass = (id: string) => {
   classes = classes.filter(c => c.id !== id);
   return id;
 };
 
+/**
+ * Record a new attendance event
+ * @param studentId ID of the student
+ * @param classId ID of the class
+ * @param present Whether the student is present
+ * @returns The newly created attendance record
+ */
 export const recordAttendance = (studentId: string, classId: string, present: boolean) => {
   const student = students.find(s => s.id === studentId);
   const classItem = classes.find(c => c.id === classId);
@@ -252,22 +337,47 @@ export const recordAttendance = (studentId: string, classId: string, present: bo
   return record;
 };
 
+/**
+ * Get a student by ID
+ * @param id Student ID
+ * @returns Student object or undefined if not found
+ */
 export const getStudentById = (id: string) => {
   return students.find(s => s.id === id);
 };
 
+/**
+ * Get a class by ID
+ * @param id Class ID
+ * @returns Class object or undefined if not found
+ */
 export const getClassById = (id: string) => {
   return classes.find(c => c.id === id);
 };
 
+/**
+ * Get attendance records for a specific student
+ * @param studentId Student ID
+ * @returns Array of attendance records for the student
+ */
 export const getAttendanceByStudentId = (studentId: string) => {
   return attendanceRecords.filter(record => record.studentId === studentId);
 };
 
+/**
+ * Get attendance records for a specific class
+ * @param classId Class ID
+ * @returns Array of attendance records for the class
+ */
 export const getAttendanceByClassId = (classId: string) => {
   return attendanceRecords.filter(record => record.classId === classId);
 };
 
+/**
+ * Get attendance records for a specific date
+ * @param date Date to filter by
+ * @returns Array of attendance records for the date
+ */
 export const getAttendanceByDate = (date: Date) => {
   return attendanceRecords.filter(record => 
     record.date.getFullYear() === date.getFullYear() &&
@@ -276,6 +386,11 @@ export const getAttendanceByDate = (date: Date) => {
   );
 };
 
+/**
+ * Calculate attendance summary statistics from a set of records
+ * @param records Array of attendance records
+ * @returns Summary statistics including total, present, absent, and percentage
+ */
 export const getAttendanceSummary = (records: AttendanceRecord[]): AttendanceSummary => {
   const total = records.length;
   const present = records.filter(r => r.present).length;

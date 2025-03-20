@@ -1,4 +1,19 @@
 
+/**
+ * PageTransition Component
+ * 
+ * A wrapper component that provides consistent page transition animations
+ * using Framer Motion. This creates a smoother user experience when
+ * navigating between different pages.
+ * 
+ * Usage:
+ * ```tsx
+ * <PageTransition>
+ *   <YourPageContent />
+ * </PageTransition>
+ * ```
+ */
+
 import React from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -8,6 +23,13 @@ interface PageTransitionProps {
   className?: string;
 }
 
+/**
+ * PageTransition Component
+ * 
+ * @param children - The content to display within the animated container
+ * @param className - Optional additional CSS classes
+ * @returns An animated wrapper for page content
+ */
 const PageTransition: React.FC<PageTransitionProps> = ({ children, className }) => {
   return (
     <motion.div

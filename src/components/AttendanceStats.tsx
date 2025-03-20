@@ -1,4 +1,12 @@
 
+/**
+ * AttendanceStats Component
+ * 
+ * Displays a summary of attendance statistics with animated visuals.
+ * Used on the Dashboard and other pages to provide a quick overview
+ * of attendance metrics.
+ */
+
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { AttendanceSummary } from "@/lib/data";
@@ -12,11 +20,21 @@ import {
 import { UserCheck, UserX, Users } from "lucide-react";
 
 interface AttendanceStatsProps {
+  /** Title for the stats card */
   title: string;
+  /** Attendance data to display */
   data: AttendanceSummary;
+  /** Optional additional CSS classes */
   className?: string;
 }
 
+/**
+ * Attendance Statistics Card
+ * 
+ * @param title - Title of the statistics card
+ * @param data - Attendance summary data to display
+ * @param className - Optional additional CSS classes
+ */
 const AttendanceStats = ({ title, data, className }: AttendanceStatsProps) => {
   const { total, present, absent, percentage } = data;
 
@@ -86,13 +104,27 @@ const AttendanceStats = ({ title, data, className }: AttendanceStatsProps) => {
 };
 
 interface StatsCardProps {
+  /** Title of the stat */
   title: string;
+  /** Value to display */
   value: number | string;
+  /** Optional icon to display */
   icon?: React.ReactNode;
+  /** CSS color classes for the icon background */
   color: string;
+  /** Animation delay for staggered entrance */
   delay: number;
 }
 
+/**
+ * Individual statistic card component
+ * 
+ * @param title - Title of the statistic
+ * @param value - Value to display
+ * @param icon - Optional icon
+ * @param color - CSS color classes
+ * @param delay - Animation delay
+ */
 const StatsCard = ({ title, value, icon, color, delay }: StatsCardProps) => {
   return (
     <motion.div
