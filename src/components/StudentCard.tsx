@@ -28,6 +28,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Mail, MoreVertical, Edit, Trash2, QrCode } from "lucide-react";
 import QRCodeGenerator from "./QRCodeGenerator";
+import StudentDetails from "./StudentDetails";
 import { cn } from "@/lib/utils";
 
 interface StudentCardProps {
@@ -44,6 +45,7 @@ const StudentCard = ({
   className,
 }: StudentCardProps) => {
   const [showQrCode, setShowQrCode] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   return (
     <>
@@ -89,7 +91,12 @@ const StudentCard = ({
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
-            <CardTitle className="text-base mt-2">{student.name}</CardTitle>
+            <CardTitle 
+              className="text-base mt-2 cursor-pointer hover:text-primary transition-colors"
+              onClick={() => setShowDetails(true)}
+            >
+              {student.name}
+            </CardTitle>
             <CardDescription>
               <span className="flex items-center text-xs">
                 <Mail className="h-3 w-3 mr-1" />
@@ -150,6 +157,18 @@ const StudentCard = ({
               size={220}
             />
           </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={showDetails} onOpenChange={setShowDetails}>
+        <DialogContent className="sm:max-w-[800px]">
+          <DialogHeader>
+            <DialogTitle>Student Information</DialogTitle>
+            <DialogDescription>
+              Detailed information and performance for {student.name}
+            </DialogDescription>
+          </DialogHeader>
+          <StudentDetails student={student} />
         </DialogContent>
       </Dialog>
     </>
