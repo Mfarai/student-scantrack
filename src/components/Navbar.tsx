@@ -10,7 +10,8 @@ import {
   BookOpen, 
   Calendar, 
   Menu, 
-  X 
+  X,
+  GraduationCap 
 } from "lucide-react";
 
 interface NavItem {
@@ -44,6 +45,11 @@ const navItems: NavItem[] = [
     title: "History",
     href: "/history",
     icon: <Calendar className="w-5 h-5" />,
+  },
+  {
+    title: "Teachers",
+    href: "/teachers",
+    icon: <GraduationCap className="w-5 h-5" />,
   },
 ];
 

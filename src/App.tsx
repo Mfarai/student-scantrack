@@ -12,6 +12,7 @@ import Classes from "./pages/Classes";
 import QRScanner from "./pages/QRScanner";
 import AttendanceHistory from "./pages/AttendanceHistory";
 import NotFound from "./pages/NotFound";
+import Teachers from "./pages/Teachers";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/classes" element={<Classes />} />
             <Route path="/scanner" element={<QRScanner />} />
             <Route path="/history" element={<AttendanceHistory />} />
+            <Route path="/teachers" element={<Teachers />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>
