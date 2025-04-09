@@ -167,7 +167,7 @@ const QRScanner = () => {
                       </div>
                       <div className="w-[200px]">
                         <Select
-                          value={selectedClass?.id}
+                          value={selectedClass?.id || "no-class-selected"}
                           onValueChange={handleClassChange}
                         >
                           <SelectTrigger>

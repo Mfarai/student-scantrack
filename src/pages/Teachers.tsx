@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -55,13 +54,11 @@ const Teachers = () => {
       return;
     }
 
-    // Here you would normally save the performance data to your database
     toast({
       title: "Performance recorded",
       description: "Student performance has been successfully recorded",
     });
 
-    // Reset form and close dialog
     setSelectedStudent("");
     setSelectedClass("");
     setPerformance("");
@@ -240,7 +237,6 @@ const Teachers = () => {
         </div>
       </PageTransition>
 
-      {/* Performance Recording Dialog */}
       <Dialog open={isRecordingOpen} onOpenChange={setIsRecordingOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>

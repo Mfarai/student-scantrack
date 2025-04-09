@@ -129,7 +129,6 @@ const Students = () => {
 
   const onSubmit = (data: StudentFormValues) => {
     if (studentToEdit) {
-      // Update existing student
       const updated = updateStudent({
         ...studentToEdit,
         ...data,
@@ -139,7 +138,6 @@ const Students = () => {
       );
       toast.success("Student updated successfully");
     } else {
-      // Add new student - ensure all required fields are present
       const newStudentData: Omit<Student, "id" | "qrCode"> = {
         name: data.name,
         studentId: data.studentId,

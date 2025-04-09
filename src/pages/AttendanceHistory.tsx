@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import PageTransition from "@/components/PageTransition";
@@ -57,24 +56,19 @@ const AttendanceHistory = () => {
   const [selectedStudent, setSelectedStudent] = useState<string | null>(null);
   const [attendanceFilter, setAttendanceFilter] = useState<"all" | "present" | "absent">("all");
 
-  // Filter attendance records based on selection
   const filteredRecords = sampleAttendanceRecords.filter((record) => {
-    // Filter by date
     const dateMatches = selectedDate
       ? record.date.toDateString() === selectedDate.toDateString()
       : true;
 
-    // Filter by class
     const classMatches = selectedClass
       ? record.classId === selectedClass
       : true;
 
-    // Filter by student
     const studentMatches = selectedStudent
       ? record.studentId === selectedStudent
       : true;
 
-    // Filter by attendance status
     const statusMatches =
       attendanceFilter === "all"
         ? true
@@ -85,7 +79,6 @@ const AttendanceHistory = () => {
     return dateMatches && classMatches && studentMatches && statusMatches;
   });
 
-  // Get summary stats
   const summary = getAttendanceSummary(filteredRecords);
 
   const handleReset = () => {
@@ -97,7 +90,6 @@ const AttendanceHistory = () => {
 
   const handleExport = () => {
     try {
-      // Create CSV content
       const headers = [
         "Student Name",
         "Student ID", 
@@ -116,23 +108,19 @@ const AttendanceHistory = () => {
         record.timeIn ? format(record.timeIn, "HH:mm:ss") : "-"
       ]);
       
-      // Convert to CSV string
       const csvString = [
         headers.join(","),
         ...csvContent.map(row => row.join(","))
       ].join("\n");
       
-      // Create download link
       const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
       const link = document.createElement("a");
       
-      // Set link properties
       const fileName = `attendance_report_${format(new Date(), "yyyyMMdd")}.csv`;
       link.setAttribute("href", url);
       link.setAttribute("download", fileName);
       
-      // Trigger download
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -211,14 +199,14 @@ const AttendanceHistory = () => {
                 <div>
                   <label className="text-sm font-medium mb-1.5 block">Class</label>
                   <Select
-                    value={selectedClass || ""}
-                    onValueChange={(value) => setSelectedClass(value || null)}
+                    value={selectedClass || "all-classes"}
+                    onValueChange={(value) => setSelectedClass(value === "all-classes" ? null : value)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="All Classes" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Classes</SelectItem>
+                      <SelectItem value="all-classes">All Classes</SelectItem>
                       {sampleClasses.map((classItem) => (
                         <SelectItem key={classItem.id} value={classItem.id}>
                           {classItem.name}
@@ -231,14 +219,14 @@ const AttendanceHistory = () => {
                 <div>
                   <label className="text-sm font-medium mb-1.5 block">Student</label>
                   <Select
-                    value={selectedStudent || ""}
-                    onValueChange={(value) => setSelectedStudent(value || null)}
+                    value={selectedStudent || "all-students"}
+                    onValueChange={(value) => setSelectedStudent(value === "all-students" ? null : value)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="All Students" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Students</SelectItem>
+                      <SelectItem value="all-students">All Students</SelectItem>
                       {sampleStudents.map((student) => (
                         <SelectItem key={student.id} value={student.id}>
                           {student.name}
