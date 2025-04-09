@@ -119,3 +119,161 @@
 .floating {
   animation: float 3s ease-in-out infinite;
 }
+
+/* New Animations inspired by ecowebzim.com */
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-left {
+  0% {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-right {
+  0% {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes zoom-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.fade-up {
+  animation: fade-up 0.8s ease forwards;
+}
+
+.fade-down {
+  animation: fade-down 0.8s ease forwards;
+}
+
+.fade-left {
+  animation: fade-left 0.8s ease forwards;
+}
+
+.fade-right {
+  animation: fade-right 0.8s ease forwards;
+}
+
+.zoom-in {
+  animation: zoom-in 0.8s ease forwards;
+}
+
+/* Staggered animation delays */
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+/* Reveal on scroll animation setup */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover animations */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.hover-rotate {
+  transition: transform 0.3s ease;
+}
+
+.hover-rotate:hover {
+  transform: rotate(3deg);
+}
+
+/* Text typing animation */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: hsl(var(--primary)) }
+}
+
+.typing-text {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid hsl(var(--primary));
+  width: 0;
+  animation: 
+    typing 3.5s steps(40, end) forwards,
+    blink-caret 0.75s step-end infinite;
+}
+
+/* Shadow lift effect */
+.shadow-lift {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.shadow-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+}
+
